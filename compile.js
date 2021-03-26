@@ -5,6 +5,10 @@ const solc = require('solc');
 const inboxpath = path.resolve(__dirname, 'Contracts', 'Inbox.sol');
 const source = fs.readFileSync(inboxpath, 'UTF-8');
 
+//console.log(solc.compile(source,1))
+
+
+
 var input = {
     language: 'Solidity',
     sources: {
@@ -21,8 +25,9 @@ var input = {
     }
 };
 
+
+
 var output = JSON.parse(solc.compile(JSON.stringify(input)));
 
-let value=output.contracts["Inbox.sol"].Inbox
-console.log(value)
-module.exports = value
+exports.abi = output.contracts['Inbox.sol']['Inbox'].abi;
+exports.bytecode = output.contracts['Inbox.sol']['Inbox'].evm.bytecode.object;
